@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Focus Forge</title>
+    <meta name="theme-color" content="#0b1020" />
+    <meta name="description" content="Focus Forge is a personal productivity dashboard for deep work sessions, tasks, and streak tracking." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Focus Forge" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="icon-192.svg" />
+    <link rel="apple-touch-icon" href="icon-192.svg" />
+    <link rel="stylesheet" href="styles.css?v=4" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Momentum dashboard</p>
+          <h1>Focus Forge</h1>
+        </div>
+        <div class="toolbar">
+          <button id="share-app" class="secondary-button small">Share</button>
+          <button id="install-app" class="ghost-button hidden" type="button">Install app</button>
+          <button id="reset-day" class="ghost-button" type="button">Reset day</button>
+        </div>
+      </header>
+
+      <main class="main-grid">
+        <section class="panel timer-panel">
+          <div class="timer-head">
+            <span class="pill" id="timer-mode">Focus</span>
+            <span id="today-date">Loading...</span>
+          </div>
+
+          <p id="greeting" class="greeting">Ready to build momentum.</p>
+          <div class="timer-display" id="timer-display" role="timer" aria-live="off">25:00</div>
+
+          <div class="timer-buttons">
+            <button id="start-timer" class="primary-button">Start</button>
+            <button id="pause-timer" class="secondary-button">Pause</button>
+            <button id="reset-timer" class="ghost-button">Reset</button>
+          </div>
+
+          <div class="mode-switcher" role="group" aria-label="Timer mode">
+            <button class="mode-button active" data-mode="focus" type="button" aria-pressed="true">Focus</button>
+            <button class="mode-button" data-mode="break" type="button" aria-pressed="false">Break</button>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-meta">
+              <span>Task progress</span>
+              <span id="progress-label">0%</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-label="Tasks completed today" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div id="progress-fill"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel stats-panel">
+          <div class="stats-grid">
+            <div class="stat-card accent">
+              <span class="stat-label">Completed</span>
+              <strong id="completed-count">0</strong>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Sessions</span>
+              <strong id="session-count">0</strong>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Focus run</span>
+              <strong id="streak-count">0</strong>
+            </div>
+          </div>
+
+          <div class="quote-box">
+            <p class="quote-label">Daily note</p>
+            <p id="quote-text">“Small steps repeated with intention create real momentum.”</p>
+          </div>
+
+          <div class="history-box">
+            <div class="history-head">
+              <p class="quote-label">Session log</p>
+              <button id="clear-log" class="mini-button" type="button">Clear</button>
+            </div>
+            <ul id="session-log" class="session-log" aria-live="polite"></ul>
+          </div>
+        </section>
+
+        <section class="panel task-panel">
+          <div class="panel-header">
+            <h2>Task list</h2>
+          </div>
+
+          <form id="task-form" class="task-form">
+            <input id="task-input" type="text" maxlength="80" placeholder="Add your next win..." aria-label="Task name" autocomplete="off" />
+            <button type="submit" class="primary-button">Add task</button>
+          </form>
+
+          <ul id="task-list" class="task-list" aria-live="polite"></ul>
+        </section>
+      </main>
+      <p id="app-status" class="app-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <script src="app.js?v=4"></script>
+  </body>
+</html>
