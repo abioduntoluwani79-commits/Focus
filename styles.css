@@ -77,6 +77,19 @@ input:focus-visible {
   display: none;
 }
 
+.install-help {
+  margin: -8px 0 20px auto;
+  max-width: 560px;
+  padding: 14px 16px;
+  border: 1px solid rgba(124, 156, 255, 0.24);
+  border-radius: 14px;
+  background: rgba(18, 26, 45, 0.96);
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  box-shadow: var(--shadow);
+}
+
 .eyebrow {
   margin: 0 0 6px;
   color: var(--muted);

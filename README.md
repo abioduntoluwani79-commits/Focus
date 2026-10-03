@@ -12,6 +12,8 @@ Focus Forge is a mobile-friendly productivity dashboard and installable progress
 - No third-party runtime assets are required after the app shell has been cached
 - Keyboard shortcuts: `Space` starts/pauses the timer; `N` focuses the new-task field
 
+The **Install app** button remains available on mobile and desktop. It opens the native install prompt where supported, or displays browser-specific install steps (including Safari's Share → Add to Home Screen flow on iPhone and iPad).
+
 ## Run locally
 
 Serve this folder over HTTP, then open the local URL. For example, with Python installed:

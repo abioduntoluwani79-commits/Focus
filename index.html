@@ -12,7 +12,7 @@
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" type="image/svg+xml" href="icon-192.svg" />
     <link rel="apple-touch-icon" href="icon-192.svg" />
-    <link rel="stylesheet" href="styles.css?v=4" />
+    <link rel="stylesheet" href="styles.css?v=5" />
   </head>
   <body>
     <div class="app-shell">
@@ -23,10 +23,11 @@
         </div>
         <div class="toolbar">
           <button id="share-app" class="secondary-button small">Share</button>
-          <button id="install-app" class="ghost-button hidden" type="button">Install app</button>
+          <button id="install-app" class="ghost-button" type="button">Install app</button>
           <button id="reset-day" class="ghost-button" type="button">Reset day</button>
         </div>
       </header>
+      <p id="install-help" class="install-help hidden" role="status" aria-live="polite"></p>
 
       <main class="main-grid">
         <section class="panel timer-panel">
@@ -106,6 +107,6 @@
       <p id="app-status" class="app-status" role="status" aria-live="polite"></p>
     </div>
 
-    <script src="app.js?v=4"></script>
+    <script src="app.js?v=5"></script>
   </body>
 </html>

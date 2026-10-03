@@ -93,6 +93,7 @@ const refs = {
   greeting: document.getElementById('greeting'),
   shareButton: document.getElementById('share-app'),
   installButton: document.getElementById('install-app'),
+  installHelp: document.getElementById('install-help'),
   status: document.getElementById('app-status')
 };
 
@@ -120,6 +121,11 @@ function showStatus(message) {
   statusTimeout = window.setTimeout(() => {
     refs.status.textContent = '';
   }, 5000);
+}
+
+function showInstallHelp(message) {
+  refs.installHelp.textContent = message;
+  refs.installHelp.classList.remove('hidden');
 }
 
 function formatTime(totalSeconds) {
@@ -446,11 +452,43 @@ refs.clearLogButton.addEventListener('click', () => {
 refs.shareButton.addEventListener('click', shareApp);
 
 refs.installButton.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  deferredPrompt = null;
-  refs.installButton.classList.add('hidden');
+  const isInstalled = window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true;
+
+  if (isInstalled) {
+    showInstallHelp('Focus Forge is already installed. Open it from your home screen or app library.');
+    return;
+  }
+
+  if (deferredPrompt) {
+    const prompt = deferredPrompt;
+    deferredPrompt = null;
+
+    try {
+      await prompt.prompt();
+      const choice = await prompt.userChoice;
+      showInstallHelp(choice.outcome === 'accepted'
+        ? 'Focus Forge is installing. You can open it from your home screen.'
+        : 'To install later, use your browser menu and choose “Install app” or “Add to Home Screen”.');
+    } catch (error) {
+      console.error('Unable to show the browser install prompt.', error);
+      showInstallHelp('Use your browser menu and choose “Install app” or “Add to Home Screen”.');
+    }
+    return;
+  }
+
+  const userAgent = navigator.userAgent;
+  const isIOS = /iPad|iPhone|iPod/.test(userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/i.test(userAgent);
+
+  if (isIOS) {
+    showInstallHelp('To install on iPhone or iPad: tap the Share button in Safari, scroll down, then tap “Add to Home Screen”.');
+  } else if (isAndroid) {
+    showInstallHelp('To install on Android: open your browser menu (⋮), then choose “Install app” or “Add to Home screen”.');
+  } else {
+    showInstallHelp('To install Focus Forge, open this page in a supported browser and choose “Install app” or “Add to Home Screen” from its menu.');
+  }
 });
 
 document.querySelectorAll('.mode-button').forEach((button) => {
@@ -477,13 +515,11 @@ document.addEventListener('keydown', (event) => {
 window.addEventListener('beforeinstallprompt', (event) => {
   event.preventDefault();
   deferredPrompt = event;
-  refs.installButton.classList.remove('hidden');
 });
 
 window.addEventListener('appinstalled', () => {
   deferredPrompt = null;
-  refs.installButton.classList.add('hidden');
-  showStatus('Focus Forge was installed successfully.');
+  showInstallHelp('Focus Forge was installed successfully. Open it from your home screen or app library.');
 });
 
 if ('serviceWorker' in navigator && window.isSecureContext) {
